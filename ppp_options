@@ -1,0 +1,16 @@
+local
+
++pap
+show-password
+lcp-echo-interval 30
+lcp-echo-failure 4
+debug
+
+<IP_SERVER>:<IP_CLIENT>
+ms-dns <IP_SERVER>
+
+defaultroute
+asyncmap 0
+passive
+notty
+noipx
