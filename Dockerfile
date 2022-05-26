@@ -6,9 +6,12 @@ ENV IP_SERVER=10.0.1.1
 ENV IP_CLIENT=10.0.1.2
 ENV PPP_PHONE=5559000
 
-RUN apk update && apk --no-cache add ppp iptables dnsmasq
+RUN apk update && \
+    apk --no-cache add ppp iptables dnsmasq && \
+    rm /var/cache/apk/*
 WORKDIR /
-RUN apk add --no-cache build-base git && \
+RUN apk update && \
+    apk add --no-cache build-base git && \
     git clone https://github.com/FozzTexx/tcpser.git && \
     cd tcpser && \
     sed -i '4 i#include <sys/select.h>' src/ip232.c && \
@@ -16,7 +19,8 @@ RUN apk add --no-cache build-base git && \
     cp tcpser /usr/bin/ && \
     cd .. && \
     rm -Rf tcpser && \
-    apk del build-base git
+    apk del build-base git && \
+    rm /var/cache/apk/*
 COPY start.sh /start.sh
 COPY ppp_options /ppp_options
 COPY pap-secrets /etc/ppp/pap-secrets
