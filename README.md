@@ -1,24 +1,24 @@
 This a container based on Alpine Linux running the TCPSER modem emulator.
 
-[TCPSER is a modem emulator](https://github.com/FozzTexx/tcpser), it emulates a Hayes compatible modem. It allows to connect an older system via a null-modem cable to services, like BBSes
-This container also has PPP preconfigured to simulate a dialup ISP provider and connect to internet.
+[TCPSER is a modem emulator](https://github.com/FozzTexx/tcpser), it emulates a Hayes compatible modem. It allows older systems to connect to services such as BBSes using a null-modem cable.
+The container also includes a preconfigured PPP to simulate a dialup ISP provider and connect to the internet.
 
 It uses Alpine with TCPSER, PPP and Dnsmasq.
 
-[Based on the PiModem project by PodSix,](http://podsix.org/articles/pimodem/) which uses a Raspberry Pi Zero W.
+[It is based on the PiModem project by PodSix,](http://podsix.org/articles/pimodem/) which uses a Raspberry Pi Zero W.
 
 ## Features
 
-* It uses the TCPSER fork by FozzTexx.
-* Includes PPP preconfigured to simulate a dialup ISP provider.
-* The PPP service accepts any username and password.
-* Uses Dnsmasq to share the host's DNS resolver.
+* Uses the TCPSER fork by FozzTexx
+* Includes PPP preconfigured to simulate a dialup ISP provider
+* The PPP service accepts any username and password
+* Uses Dnsmasq to share the host's DNS resolver
 
 ## Requirements
 
-* A retro computer with a serial port.
-* A modern computer running docker with a serial port, or [an USB serial adapter](https://en.wikipedia.org/wiki/File:FTDI_USB_SERIAL.jpg).
-* A [null modem cable](https://en.wikipedia.org/wiki/Null_modem).
+* A retro computer with a serial port
+* A modern computer running Docker with a serial port or [an USB serial adapter](https://en.wikipedia.org/wiki/File:FTDI_USB_SERIAL.jpg)
+* A [null-modem cable](https://en.wikipedia.org/wiki/Null_modem)
 
 ## How to build
 
@@ -34,17 +34,19 @@ docker build -t tcpser-modem-emulator .
 * `DEV`: The serial device. Default: `/dev/ttyS0`
 * `BAUD`: The baud rate to use. Default: `38400`
 
-For the fake Dialup internet provider, there are these additional variables available:
+For the fake dialup internet provider, the following additional variables are available:
 
 * `IP_SERVER`: The IP assigned to the server. Default: `10.0.1.1`
 * `IP_CLIENT`: The IP assigned to the client. Default: `10.0.1.2`
 * `PPP_PHONE`: The phone number to use. Default: `5559000`
-* `PROXY`: Optional. Redirect to a proxy any request to port 80. It must be set in the `IP:PORT` format, like `172.17.0.1:8000`. Unset by default.
+* `PROXY`: Optional. Redirects all requests to port 80 to a proxy specified in the format IP:PORT, such as `172.17.0.1:8000`. Unset by default.
 
 ## Volumes
 
-* `/dev/<your serial device>`: The serial device to be used. Normally is /dev/ttyUSB0 for USB adapters. /dev/ttyS0 would be the first serial device (what would be "com1" on Windows)
-* `/phonebook.txt`: File containing lines in the format `<phone number>=<ip/domain>:<port>`. Example: `1701=bbs.fozztexx.com:23`
+The container also supports the following volumes:
+
+* `/dev/<your serial device>`: The serial device to be used. This is typically `/dev/ttyUSB0` for USB adapters and `/dev/ttyS0` for the first serial device (equivalent to "com1" on Windows)
+* `/phonebook.txt`: A file containing lines in the format `<phone number>=<ip/domain>:<port>`. Example: `1701=bbs.fozztexx.com:23`
 
 ## Usage
 
